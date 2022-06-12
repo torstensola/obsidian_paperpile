@@ -2,7 +2,7 @@ import re
 import glob
 import os
 
-def p_crawl(folder='/your obsidian vault_folder path here/'):
+def p_crawl(folder='/your obsidian vault folder path here/'):
     # Check that vault exists
     if not os.path.exists(folder):
         print('Vault folder not located. Make sure you changed the folder argument above/input the vault folder name when running function!\n')
@@ -56,10 +56,16 @@ def p_crawl(folder='/your obsidian vault_folder path here/'):
     text = ['##### {}\n{}\n\n'.format(key, tdict[key]) for key in tdict.keys()]
 
     # Get new file name
-    new_name = '{}Paper notes/{} et al{} {}.md'.format(note[:note.rfind('/')+1],
-                                                       tdict['Author'].split(',')[0][2:],
-                                                       tdict['Year'],
-                                                       tdict['Title'])
+    if len(au_list) == 1:
+        new_name = '{}Paper notes/{}{} {}.md'.format(note[:note.rfind('/')+1],
+                                                           tdict['Author'].split(',')[0][2:],
+                                                           tdict['Year'],
+                                                           tdict['Title'])        
+    else:
+        new_name = '{}Paper notes/{} et al{} {}.md'.format(note[:note.rfind('/')+1],
+                                                           tdict['Author'].split(',')[0][2:],
+                                                           tdict['Year'],
+                                                           tdict['Title'])
     
     # Check for note duplicate
     if os.path.exists(new_name):
