@@ -8,6 +8,10 @@ def p_crawl(folder='/your obsidian vault folder path here/'):
         print('Vault folder not located. Make sure you changed the folder argument above/input the vault folder name when running function!\n')
         quit()
     
+    # Add folder end if not there
+    if folder[-1] != '/':
+        folder += '/'
+        
     # Open latest MD note names Untitled.md
     list_of_files = glob.glob(folder + '*.md')
     note = max(list_of_files, key=os.path.getctime)
