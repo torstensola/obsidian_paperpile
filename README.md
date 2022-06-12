@@ -13,3 +13,5 @@ Detailed simple instructions:
 This should process the bibtex info into the note layout I made and rename the Untitled.md note into "firstauthor et al year title" format and move it into the Paper notes folder. Done! 
 
 Caveat: I certainly haven't tested this on a HUGE number of papers. May be that older papers will crash it. I also basically exclusively read neuroscience papers. May differ for humanities. Sooo, give it a try, and tweak to your own style/delight. May improve code in future.
+
+Update: the script now creates the /Paper notes/ folder in the vault if there was none. It also checks that the vault folder (input variable) exists, and that there are no duplicates of the processed note file. Exits if any of these fail.
