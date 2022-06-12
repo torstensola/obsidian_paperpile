@@ -2,7 +2,7 @@ import re
 import glob
 import os
 
-def p_crawl(folder='/Users/torst/Desktop/UiA/Resources/Obsidian notes/Tors notater/'):
+def p_crawl(folder='/your obsidian vault_folder path here/'):
     # Check that vault exists
     if not os.path.exists(folder):
         print('Vault folder not located. Make sure you changed the folder argument above/input the vault folder name when running function!\n')
@@ -52,7 +52,7 @@ def p_crawl(folder='/Users/torst/Desktop/UiA/Resources/Obsidian notes/Tors notat
     all_keys = first_keys + [i for i in list(tdict.keys()) if i not in first_keys]
     tdict = {key: tdict[key] for key in all_keys}
 
-    # Generate final text section
+    # Generate final text section (change ##### below to whatever heading # you like)
     text = ['##### {}\n{}\n\n'.format(key, tdict[key]) for key in tdict.keys()]
 
     # Get new file name
