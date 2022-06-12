@@ -3,14 +3,25 @@ import glob
 import os
 
 def p_crawl(folder='/Users/torst/Desktop/UiA/Resources/Obsidian notes/Tors notater/'):
+    # Check that vault exists
+    if not os.path.exists(folder):
+        print('Vault folder not located. Make sure you changed the folder argument above/input the vault folder name when running function!\n')
+        quit()
+    
     # Open latest MD note names Untitled.md
     list_of_files = glob.glob(folder + '*.md')
     note = max(list_of_files, key=os.path.getctime)
+    
     # Check file
     if note.split('/')[-1] != 'Untitled.md':
-        print('Untitled file not located. Try saving!')
-        exit()
-    print('Using: '.format(note))
+        print('Untitled file not located. Try saving!\n')
+        quit()
+    print('Using: {}'.format(note))
+    
+    # Check for /Paper notes/ folder. Create if not already there
+    if not os.path.exists(folder+'/Paper notes/'):
+        os.makedirs(folder+'/Paper notes/')
+        print('Paper notes folder not found. One has now been generated.\n')
 
     # Get lines from MD file
     with open(note) as f:
@@ -44,17 +55,26 @@ def p_crawl(folder='/Users/torst/Desktop/UiA/Resources/Obsidian notes/Tors notat
     # Generate final text section
     text = ['##### {}\n{}\n\n'.format(key, tdict[key]) for key in tdict.keys()]
 
-    # Write to file
-    a_file = open(note, 'w')
-    a_file.writelines(text)
-    a_file.close()
-
-    # Rename file
+    # Get new file name
     new_name = '{}Paper notes/{} et al{} {}.md'.format(note[:note.rfind('/')+1],
                                                        tdict['Author'].split(',')[0][2:],
                                                        tdict['Year'],
                                                        tdict['Title'])
-    os.rename(note, new_name)
+    
+    # Check for note duplicate
+    if os.path.exists(new_name):
+        input('A file with the same name exists. New file not saved.')
+        quit()
+    else:
+        # Write to file
+        a_file = open(note, 'w')
+        a_file.writelines(text)
+        a_file.close()
+        
+        # Rename file
+        os.rename(note, new_name)
+        
+        print('Successful notes formatting.\nNew note: {}'.format(new_name))
 
 
 p_crawl()
