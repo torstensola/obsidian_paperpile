@@ -51,6 +51,10 @@ def p_crawl(folder='/your obsidian vault folder path here/'):
     else:
         tdict['Keywords'] = ''
 
+    # Fix weird double quotation mark thing going on in some abstracts
+    if 'Abstract' in tdict.keys():
+        tdict['Abstract'] = re.sub('``', '\'\'', tdict['Abstract'])
+        
     # Sort according to preference
     first_keys = [key for key in ['Title', 'Author', 'Journal', 'Year', 'Url', 'Abstract', 'Keywords'] if key in tdict.keys()]
     all_keys = first_keys + [i for i in list(tdict.keys()) if i not in first_keys]
